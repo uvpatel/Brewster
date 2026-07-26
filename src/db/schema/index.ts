@@ -1,0 +1,33 @@
+export * from "./common";
+export * from "./auth";
+export * from "./stores";
+export * from "./categories";
+export * from "./taxes";
+export * from "./products";
+export * from "./floors";
+export * from "./customers";
+export * from "./pos-sessions";
+export * from "./orders";
+export * from "./discounts";
+export * from "./payments";
+export * from "./kitchen";
+export * from "./receipts";
+export * from "./relations";
+
+import type { accounts, stores } from "./stores";
+import type { products } from "./products";
+import type { orderItems, orders } from "./orders";
+import type { payments } from "./payments";
+
+export type Store = typeof stores.$inferSelect;
+export type NewStore = typeof stores.$inferInsert;
+export type Account = typeof accounts.$inferSelect;
+export type NewAccount = typeof accounts.$inferInsert;
+export type Product = typeof products.$inferSelect;
+export type NewProduct = typeof products.$inferInsert;
+export type Order = typeof orders.$inferSelect;
+export type NewOrder = typeof orders.$inferInsert;
+export type OrderItem = typeof orderItems.$inferSelect;
+export type NewOrderItem = typeof orderItems.$inferInsert;
+export type Payment = typeof payments.$inferSelect;
+export type NewPayment = typeof payments.$inferInsert;
