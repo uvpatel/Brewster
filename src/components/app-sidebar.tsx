@@ -15,7 +15,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { LayoutDashboardIcon, ListIcon,  FolderIcon, UsersIcon, CameraIcon, FileTextIcon, Settings2Icon, CircleHelpIcon, SearchIcon, DatabaseIcon, FileChartColumnIcon, FileIcon, CommandIcon, VideoIcon, UserIcon, CoffeeIcon, RockingChairIcon, CreditCard, ShoppingBasket } from "lucide-react"
+import { LayoutDashboardIcon, ListIcon,  FolderIcon, UsersIcon, CameraIcon, FileTextIcon, Settings2Icon, CircleHelpIcon, SearchIcon, DatabaseIcon, FileChartColumnIcon, FileIcon, CommandIcon, VideoIcon, UserIcon, CoffeeIcon, RockingChairIcon, CreditCard, ShoppingBasket, DiscIcon, PenIcon, CookingPot } from "lucide-react"
 
 
 const data = {
@@ -58,11 +58,35 @@ const data = {
     },
     {
       title: "Catagory",
-      url: "/dashboard/playlists",
+      url: "/dashboard/catagory",
       icon: (
         <ShoppingBasket />
       ),
     },
+    {
+      title: "Employees",
+      url: "/dashboard/(admin)/employees",
+      icon: (
+        <UsersIcon
+        />
+      ),
+    },
+    {
+      title: "discounts",
+      url: "/dashboard/discounts",
+      icon: (
+        <DiscIcon />
+      )
+    },
+    {
+      title: "Kitchen",
+      url: "/dashboard/kitchen",
+      icon: (
+        <CookingPot
+         />
+      )
+    },
+    
   ],
   navClouds: [
     {
@@ -108,7 +132,7 @@ const data = {
         <FileTextIcon
         />
       ),
-      url: "#",
+      url: "/documents",
       items: [
         {
           title: "Active Proposals",
@@ -124,7 +148,7 @@ const data = {
   navSecondary: [
     {
       title: "Settings",
-      url: "#",
+      url: "/setting",
       icon: (
         <Settings2Icon
         />
@@ -132,7 +156,7 @@ const data = {
     },
     {
       title: "Get Help",
-      url: "#",
+      url: "/get-help",
       icon: (
         <CircleHelpIcon
         />
@@ -140,7 +164,7 @@ const data = {
     },
     {
       title: "Search",
-      url: "#",
+      url: "/search",
       icon: (
         <SearchIcon
         />
@@ -150,7 +174,7 @@ const data = {
   documents: [
     {
       name: "Data Library",
-      url: "#",
+      url: "/data-library",
       icon: (
         <DatabaseIcon
         />
@@ -158,7 +182,7 @@ const data = {
     },
     {
       name: "Reports",
-      url: "#",
+      url: "/dashboard/reports",
       icon: (
         <FileChartColumnIcon
         />
@@ -166,7 +190,7 @@ const data = {
     },
     {
       name: "Word Assistant",
-      url: "#",
+      url: "",
       icon: (
         <FileIcon
         />
