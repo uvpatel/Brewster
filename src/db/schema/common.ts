@@ -6,7 +6,12 @@ export const createdAt = () => timestamp("created_at", { withTimezone: true }).d
 export const updatedAt = () =>
   timestamp("updated_at", { withTimezone: true }).defaultNow().notNull().$onUpdate(() => new Date());
 
-export const accountRoleEnum = pgEnum("account_role", ["ADMIN", "CASHIER"]);
+export const accountRoleEnum = pgEnum("account_role", [
+  "ADMIN",
+  "MANAGER",
+  "CASHIER",
+  "KITCHEN",
+]);
 export const recordStatusEnum = pgEnum("record_status", ["ACTIVE", "ARCHIVED"]);
 export const unitEnum = pgEnum("unit_of_measure", ["PIECE", "KG", "GRAM", "LITRE", "ML"]);
 export const tableStatusEnum = pgEnum("restaurant_table_status", [

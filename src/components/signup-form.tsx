@@ -187,7 +187,7 @@ export function SignupForm({
           <div className="relative hidden bg-muted md:block">
             <div className="flex h-full items-center justify-center p-8 bg-gradient-to-br from-primary/20 to-muted text-center">
               <div className="space-y-2">
-                <h3 className="text-lg font-semibold">Welcome to Antigravity YouTube</h3>
+                <h3 className="text-lg font-semibold">Welcome to Brewster</h3>
                 <p className="text-sm text-muted-foreground">
                   Streamlined video management and dashboard experience powered by Better Auth.
                 </p>

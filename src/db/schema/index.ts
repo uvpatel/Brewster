@@ -14,6 +14,8 @@ export * from "./kitchen";
 export * from "./receipts";
 export * from "./relations";
 
+export * from "./stores";
+
 import type { accounts, stores } from "./stores";
 import type { products } from "./products";
 import type { orderItems, orders } from "./orders";
@@ -31,3 +33,4 @@ export type OrderItem = typeof orderItems.$inferSelect;
 export type NewOrderItem = typeof orderItems.$inferInsert;
 export type Payment = typeof payments.$inferSelect;
 export type NewPayment = typeof payments.$inferInsert;
+

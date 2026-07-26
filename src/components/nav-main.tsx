@@ -50,7 +50,7 @@ export function NavMain({
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton tooltip={item.title}>
                 {item.icon}
-               <Link href={item.url} target="_blank">
+               <Link href={item.url} >
                   <span>{item.title}</span>
                 </Link>
               </SidebarMenuButton>
