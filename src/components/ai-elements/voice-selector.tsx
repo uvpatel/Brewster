@@ -80,7 +80,7 @@ export const VoiceSelector = ({
 
   const [open, setOpen] = useControllableState({
     defaultProp: defaultOpen,
-    onChange: onOpenChange,
+    onChange: onOpenChange ? (openState: boolean) => onOpenChange(openState, {} as any) : undefined,
     prop: openProp,
   });
 

@@ -421,7 +421,7 @@ export const PromptInputActionAddAttachments = ({
   const attachments = usePromptInputAttachments();
 
   const handleSelect = useCallback(
-    (e: Event) => {
+    (e: any) => {
       e.preventDefault();
       attachments.openFileDialog();
     },
@@ -449,26 +449,27 @@ export const PromptInputActionAddScreenshot = ({
   const attachments = usePromptInputAttachments();
 
   const handleSelect = useCallback(
-    async (event: Event) => {
+    (event: any) => {
       onSelect?.(event);
       if (event.defaultPrevented) {
         return;
       }
 
-      try {
-        const screenshot = await captureScreenshot();
-        if (screenshot) {
-          attachments.add([screenshot]);
-        }
-      } catch (error) {
-        if (
-          error instanceof DOMException &&
-          (error.name === "NotAllowedError" || error.name === "AbortError")
-        ) {
-          return;
-        }
-        throw error;
-      }
+      captureScreenshot()
+        .then((screenshot) => {
+          if (screenshot) {
+            attachments.add([screenshot]);
+          }
+        })
+        .catch((error) => {
+          if (
+            error instanceof DOMException &&
+            (error.name === "NotAllowedError" || error.name === "AbortError")
+          ) {
+            return;
+          }
+          throw error;
+        });
     },
     [onSelect, attachments]
   );
@@ -1238,7 +1239,7 @@ export const PromptInputSubmit = ({
         onStop();
         return;
       }
-      onClick?.(e);
+      onClick?.(e as any);
     },
     [isGenerating, onStop, onClick]
   );
