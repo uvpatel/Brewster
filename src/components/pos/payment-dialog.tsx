@@ -33,21 +33,21 @@ export function PaymentDialog({ open, onOpenChange, onPaymentSuccess }: PaymentD
   const cashReceivedNum = parseFloat(cashReceived) || 0;
   const changeDue = Math.max(0, cashReceivedNum - payableTotal);
 
-  const handleCompleteCash = () => {
+  const handleCompleteCash = async () => {
     if (cashReceivedNum < payableTotal) return;
-    const order = processPayment("CASH", cashReceivedNum);
+    const order = await processPayment("CASH", cashReceivedNum);
     onPaymentSuccess(order);
     onOpenChange(false);
   };
 
-  const handleCompleteCard = () => {
-    const order = processPayment("CARD", payableTotal, cardRef);
+  const handleCompleteCard = async () => {
+    const order = await processPayment("CARD", payableTotal, cardRef);
     onPaymentSuccess(order);
     onOpenChange(false);
   };
 
-  const handleCompleteUPI = () => {
-    const order = processPayment("UPI", payableTotal);
+  const handleCompleteUPI = async () => {
+    const order = await processPayment("UPI", payableTotal);
     onPaymentSuccess(order);
     onOpenChange(false);
   };

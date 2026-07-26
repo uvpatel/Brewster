@@ -38,11 +38,11 @@ export function CustomerDialog({ open, onOpenChange }: CustomerDialogProps) {
     onOpenChange(false);
   };
 
-  const handleCreateCustomer = (e: React.FormEvent) => {
+  const handleCreateCustomer = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) return;
 
-    const newCust = addCustomer({
+    const newCust = await addCustomer({
       name,
       email: email.trim() || undefined,
       phone: phone.trim() || undefined,

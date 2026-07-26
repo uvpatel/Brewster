@@ -101,11 +101,11 @@ export default function ProductPage() {
     setIsModalOpen(false);
   };
 
-  const handleInlineCreateCategory = (e: React.FormEvent) => {
+  const handleInlineCreateCategory = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newCatName.trim()) return;
 
-    const created = addCategory({
+    const created = await addCategory({
       name: newCatName,
       color: newCatColor,
       status: "ACTIVE",

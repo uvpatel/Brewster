@@ -24,8 +24,8 @@ export default function POSPage() {
   const [isReceiptOpen, setIsReceiptOpen] = useState(false);
   const [completedOrder, setCompletedOrder] = useState<Order | null>(null);
 
-  const handleSendToKitchen = () => {
-    const ticket = sendToKitchen();
+  const handleSendToKitchen = async () => {
+    const ticket = await sendToKitchen();
     if (ticket) {
       alert(`Order ${ticket.ticketNumber} sent to Kitchen Display System!`);
     }
