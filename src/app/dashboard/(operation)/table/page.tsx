@@ -1,7 +1,2 @@
-import React from 'react'
-
-export default function TablePage() {
-  return (
-    <div>TablePage</div>
-  )
-}
+import FloorTablePage from "../sitting/page";
+export default FloorTablePage;

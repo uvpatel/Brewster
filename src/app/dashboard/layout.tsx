@@ -4,6 +4,7 @@ import { getCurrentUser } from "@/lib/auth/get-current-user";
 import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
+import { POSProvider } from "@/lib/pos/pos-context";
 
 export const dynamic = "force-dynamic";
 
@@ -30,20 +31,22 @@ export default async function DashboardLayout({
   return (
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col suppress-hydration-warning">
-        <SidebarProvider
-          style={
-            {
-              "--sidebar-width": "calc(var(--spacing) * 72)",
-              "--header-height": "calc(var(--spacing) * 12)",
-            } as React.CSSProperties
-          }
-        >
-          <AppSidebar variant="inset" userRole={user.role} />
-          <SidebarInset>
-            <SiteHeader />
-            {children}
-          </SidebarInset>
-        </SidebarProvider>
+        <POSProvider>
+          <SidebarProvider
+            style={
+              {
+                "--sidebar-width": "calc(var(--spacing) * 72)",
+                "--header-height": "calc(var(--spacing) * 12)",
+              } as React.CSSProperties
+            }
+          >
+            <AppSidebar variant="inset" userRole={user.role} />
+            <SidebarInset>
+              <SiteHeader />
+              {children}
+            </SidebarInset>
+          </SidebarProvider>
+        </POSProvider>
       </body>
     </html>
   );
