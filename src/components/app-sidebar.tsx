@@ -108,7 +108,7 @@ const data = {
     },
     {
       title: "Get Help",
-      url: "/get-help",
+      url: "/dashboard/get-help",
       icon: <CircleHelpIcon />,
     },
     {

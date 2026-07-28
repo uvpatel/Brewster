@@ -1,7 +1,2 @@
-import React from 'react'
-
-export default function ReciptPage() {
-  return (
-    <div>ReciptPage</div>
-  )
-}
+import SettingsPage from "../page";
+export default SettingsPage;

@@ -63,11 +63,18 @@ export function SignupForm({
   }
 
   const handleSocialSignUp = async (provider: "github" | "google") => {
+    if (loading) return
+    setLoading(true)
     setError(null)
-    await authClient.signIn.social({
-      provider,
-      callbackURL: "/dashboard",
-    })
+    try {
+      await authClient.signIn.social({
+        provider,
+        callbackURL: "/dashboard",
+      })
+    } catch (err: any) {
+      setError(err?.message || "Failed to initiate social sign up.")
+      setLoading(false)
+    }
   }
 
   return (
@@ -157,6 +164,7 @@ export function SignupForm({
                 <Button
                   variant="outline"
                   type="button"
+                  disabled={loading}
                   onClick={() => handleSocialSignUp("github")}
                 >
                   <svg className="size-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
@@ -167,6 +175,7 @@ export function SignupForm({
                 <Button
                   variant="outline"
                   type="button"
+                  disabled={loading}
                   onClick={() => handleSocialSignUp("google")}
                 >
                   <svg className="size-4 mr-2" viewBox="0 0 24 24" fill="currentColor">

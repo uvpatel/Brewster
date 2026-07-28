@@ -57,11 +57,18 @@ export function LoginForm({
   }
 
   const handleSocialSignIn = async (provider: "github" | "google") => {
+    if (loading) return
+    setLoading(true)
     setError(null)
-    await authClient.signIn.social({
-      provider,
-      callbackURL: "/dashboard",
-    })
+    try {
+      await authClient.signIn.social({
+        provider,
+        callbackURL: "/dashboard",
+      })
+    } catch (err: any) {
+      setError(err?.message || "Failed to initiate social sign in.")
+      setLoading(false)
+    }
   }
 
   return (
@@ -85,6 +92,7 @@ export function LoginForm({
                 <Button
                   variant="outline"
                   type="button"
+                  disabled={loading}
                   onClick={() => handleSocialSignIn("github")}
                 >
                   <svg className="size-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
@@ -95,6 +103,7 @@ export function LoginForm({
                 <Button
                   variant="outline"
                   type="button"
+                  disabled={loading}
                   onClick={() => handleSocialSignIn("google")}
                 >
                   <svg className="size-4 mr-2" viewBox="0 0 24 24" fill="currentColor">

@@ -3,11 +3,11 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@/index";
 import * as schema from "@/db/schema";
 import { admin } from "better-auth/plugins";
-import { eq } from "drizzle-orm";
+import { eq, count } from "drizzle-orm";
 
 export const auth = betterAuth({
   secret: process.env.BETTER_AUTH_SECRET || "default_secret_key_change_in_production",
-  baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
+  baseURL: process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
   trustedOrigins: [
     "http://localhost:3000",
     "http://localhost:3001",
@@ -16,6 +16,10 @@ export const auth = betterAuth({
   ],
   advanced: {
     useSecureCookies: process.env.NODE_ENV === "production",
+    defaultCookieAttributes: {
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+    },
   },
   plugins: [admin()],
 
@@ -76,12 +80,18 @@ export const auth = betterAuth({
             }
 
             if (defaultStore) {
+              const [{ totalAccounts }] = await db
+                .select({ totalAccounts: count() })
+                .from(schema.accounts);
+
+              const role = Number(totalAccounts) === 0 ? "ADMIN" : "CASHIER";
+
               await db.insert(schema.accounts).values({
                 authUserId: user.id,
                 storeId: defaultStore.id,
                 name: user.name || "Cafe Employee",
                 email: user.email,
-                role: "CASHIER", // Safe default role
+                role,
                 status: "ACTIVE",
                 isActive: true,
               });

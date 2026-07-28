@@ -10,7 +10,7 @@ export default async function PosLayout({
   const user = await getCurrentUser();
 
   if (!user) {
-    redirect("/sign-in");
+    redirect("/login");
   }
 
   if (!user.isActive || !hasPermission(user.role, "pos:use")) {

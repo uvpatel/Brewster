@@ -10,7 +10,7 @@ export default async function ReportsLayout({
   const user = await getCurrentUser();
 
   if (!user) {
-    redirect("/sign-in");
+    redirect("/login");
   }
 
   if (!user.isActive || !hasPermission(user.role, "reports:view")) {

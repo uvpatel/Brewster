@@ -10,7 +10,7 @@ export default async function EmployeesLayout({
   const user = await getCurrentUser();
 
   if (!user) {
-    redirect("/sign-in");
+    redirect("/login");
   }
 
   if (!user.isActive || (!hasPermission(user.role, "employees:view") && !hasPermission(user.role, "employees:manage"))) {

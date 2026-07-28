@@ -27,8 +27,8 @@ export default function UnauthorizedPage() {
             </Link>
           </Button>
 
-          <Button  variant="outline">
-            <Link href="/sign-in">
+          <Button variant="outline">
+            <Link href="/login">
               <LogOut className="mr-2 h-4 w-4" />
               Sign in with another account
             </Link>
