@@ -7,12 +7,11 @@ import { eq, count } from "drizzle-orm";
 
 export const auth = betterAuth({
   secret: process.env.BETTER_AUTH_SECRET || "default_secret_key_change_in_production",
-  baseURL: process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+  baseURL: process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_APP_URL || "https://cafe-two-chi.vercel.app" || "http://localhost:3000",
   trustedOrigins: [
+    "https://cafe-two-chi.vercel.app",
     "http://localhost:3000",
-    "http://localhost:3001",
-    "http://127.0.0.1:3000",
-    "http://127.0.0.1:3001",
+ 
   ],
   advanced: {
     useSecureCookies: process.env.NODE_ENV === "production",
@@ -104,3 +103,21 @@ export const auth = betterAuth({
     },
   },
 });
+
+// Runtime checks to aid debugging in deployment
+if (process.env.NODE_ENV === "production") {
+  if (!process.env.BETTER_AUTH_SECRET) {
+    // eslint-disable-next-line no-console
+    console.error(
+      "[auth] BETTER_AUTH_SECRET is not set. Authentication may fail in production."
+    );
+  }
+
+  const baseUrl = process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_APP_URL;
+  if (!baseUrl) {
+    // eslint-disable-next-line no-console
+    console.error(
+      "[auth] BETTER_AUTH_URL or NEXT_PUBLIC_APP_URL is not set. Set your app public URL for proper auth redirects."
+    );
+  }
+}
