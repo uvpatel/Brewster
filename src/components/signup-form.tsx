@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useState, useEffect } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { authClient } from "@/lib/auth-client"
@@ -21,12 +21,25 @@ export function SignupForm({
   ...props
 }: React.ComponentProps<"div">) {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const urlError = searchParams.get("error")
+    if (urlError) {
+      if (urlError === "unable_to_create_user") {
+        setError("Unable to create account. Please verify your details or try signing in.")
+      } else {
+        setError(urlError.replace(/_/g, " "))
+      }
+    }
+  }, [searchParams])
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

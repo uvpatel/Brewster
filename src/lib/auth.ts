@@ -2,17 +2,30 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@/index";
 import * as schema from "@/db/schema";
-import { admin } from "better-auth/plugins";
 import { eq, count } from "drizzle-orm";
+
+const getBaseUrl = () => {
+  if (process.env.BETTER_AUTH_URL) return process.env.BETTER_AUTH_URL;
+  if (process.env.NEXT_PUBLIC_APP_URL) return process.env.NEXT_PUBLIC_APP_URL;
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  return "http://localhost:3000";
+};
+
+const getTrustedOrigins = () => {
+  const origins = new Set<string>([
+    "https://cafe-two-chi.vercel.app",
+    "http://localhost:3000",
+  ]);
+  if (process.env.BETTER_AUTH_URL) origins.add(process.env.BETTER_AUTH_URL);
+  if (process.env.NEXT_PUBLIC_APP_URL) origins.add(process.env.NEXT_PUBLIC_APP_URL);
+  if (process.env.VERCEL_URL) origins.add(`https://${process.env.VERCEL_URL}`);
+  return Array.from(origins);
+};
 
 export const auth = betterAuth({
   secret: process.env.BETTER_AUTH_SECRET || "default_secret_key_change_in_production",
-  baseURL: process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_APP_URL || "https://cafe-two-chi.vercel.app" || "http://localhost:3000",
-  trustedOrigins: [
-    "https://cafe-two-chi.vercel.app",
-    "http://localhost:3000",
- 
-  ],
+  baseURL: getBaseUrl(),
+  trustedOrigins: getTrustedOrigins(),
   advanced: {
     useSecureCookies: process.env.NODE_ENV === "production",
     defaultCookieAttributes: {
@@ -20,8 +33,6 @@ export const auth = betterAuth({
       secure: process.env.NODE_ENV === "production",
     },
   },
-  plugins: [admin()],
-
   database: drizzleAdapter(db, {
     provider: "pg",
     schema,
@@ -46,6 +57,8 @@ export const auth = betterAuth({
       create: {
         after: async (user) => {
           try {
+            if (!user || !user.email) return;
+
             // Check if account already exists for this authUserId or email
             const [existingAccount] = await db
               .select()
